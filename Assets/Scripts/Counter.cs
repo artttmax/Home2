@@ -4,14 +4,21 @@ using TMPro;
 
 public class Counter : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI _countText;
+    [SerializeField] private float _increasValue = 1;
 
     private bool _isCounting = false;
     private float _currentValue = 0;
     private Coroutine _counterCoroutine = null;
-    private WaitForSeconds wait = new WaitForSeconds(0.5f);
+    private WaitForSeconds _wait = new WaitForSeconds(0.5f);
 
-    void Update()
+    public float CurrentValue => _currentValue;
+
+    private void Update()
+    {
+        ClickVerification();
+    }
+
+    private void ClickVerification() 
     {
         if (Input.GetMouseButtonDown(0))
         {
@@ -49,14 +56,13 @@ public class Counter : MonoBehaviour
     {
         while (true)
         {
-            _currentValue += 1;
-            DisplayTime(_currentValue);
-            yield return wait;
+            IncreasValue();
+            yield return _wait;
         }
     }
 
-    private void DisplayTime(float currentValue)
+    private void IncreasValue()
     {
-        _countText.text = currentValue.ToString("");
+        _currentValue += _increasValue;
     }
 }
